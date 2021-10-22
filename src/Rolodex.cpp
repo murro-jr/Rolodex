@@ -104,3 +104,13 @@ void Rolodex::insertBeforeCurrent(const std::string& value)
         current=going;
 
 }
+
+ void Rolodex::delete_current()
+ {
+     //Add code here
+        current-> prev_ -> next_ = current-> next_;
+        current-> next_ -> prev_ = current-> prev_;
+        RodolexItem* deleter = current;
+        current = current-> next_;
+        delete deleter;
+    }

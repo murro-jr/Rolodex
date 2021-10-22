@@ -45,43 +45,71 @@ void rolodex()
             continue; // ignore empty words
 
 
-        if (rolodex.isBeforeFirst() || rolodex.currentValue() <= word) {
+         if (rolodex.isBeforeFirst() || rolodex.currentValue() <= word) {
             while (!rolodex.isAfterLast() && rolodex.currentValue() < word) {
                 rolodex.rotateForward();
+                statistics.forward_rotations++;
                 if (verbose)
                     cerr << "rotateForward\n";
             }
-            rolodex.insertBeforeCurrent(word);
-            if (verbose)
-                cerr << "insertBeforeCurrent\n";
-        }
-        else if (rolodex.isAfterLast() || rolodex.currentValue() >= word) {
+
+            if (delete_check) {
+                if (!rolodex.isAfterLast() && rolodex.currentValue() == word) {
+                    rolodex.delete_current();
+                    statistics.deletions++;
+                    if (verbose)
+                        cerr << "delete (forward)\n";
+                }
+            } else if (duplicates || rolodex.isAfterLast() || rolodex.currentValue() != word) {
+                rolodex.insertBeforeCurrent(word);
+                statistics.insertions++;
+                if (verbose)
+                    cerr << "insertBeforeCurrent\n";
+            }
+        } else if (rolodex.isAfterLast() || rolodex.currentValue() >= word) {
             while (!rolodex.isBeforeFirst() && rolodex.currentValue() > word) {
                 rolodex.rotateBackward();
+                statistics.backward_rotations++;
                 if (verbose)
                     cerr << "rotateBackward\n";
             }
-            rolodex.insertAfterCurrent(word);
-            if (verbose)
-                cerr << "insertAfterCurrent\n";
+
+            if (delete_check) {
+                if (!rolodex.isBeforeFirst() && rolodex.currentValue() == word) {
+                    rolodex.delete_current();
+                    statistics.deletions++;
+                    if (verbose)
+                        cerr << "delete (backward)\n";
+                }
+            } else if (duplicates || rolodex.isBeforeFirst() || rolodex.currentValue() != word) {
+                rolodex.insertAfterCurrent(word);
+                statistics.insertions++;
+                if (verbose)
+                    cerr << "insertAfterCurrent\n";
+            }
         }
     }
 
     if (printCurrent) {
         cout << rolodex.currentValue() << '\n';
     }
-    else if (report) {
+
+    else if (report)
+    {
         cout << statistics.insertions << " "
              << statistics.deletions << " "
              << statistics.forward_rotations << " "
              << statistics.backward_rotations << endl;
     }
+
     else { // Output all Rolodex card values (default)
-        while (!rolodex.isBeforeFirst()) {
+        while (!rolodex.isBeforeFirst())
+        {
             rolodex.rotateBackward();
         }
         rolodex.rotateForward(); // Go to the first card
-        while (!rolodex.isAfterLast()) {
+        while (!rolodex.isAfterLast())
+        {
             cout << rolodex.currentValue() << '\n';
             rolodex.rotateForward();
         }

@@ -55,6 +55,11 @@ public:
      */
     void insertBeforeCurrent(const std::string& value);
 
+    /**
+     * Delete the value of the current card.
+     */
+    void delete_current();
+
 private:
     // Add instance variables here
     struct RodolexItem {
