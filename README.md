@@ -4,10 +4,12 @@ A  basic  version  of  the  program  that  includes  a  skeleton Rolodex  class 
 
 Since you do not know how many entries the Rolodex will hold, you will need to use dynamically allocated memory to store the information. An easy way to implement the Rolodex file is using a doubly linked list. Each item in the list will store the information for a single card and will need an instance variable to store the card value as well as pointers to the next and previous items. For example, you could represent the items like this: 
 
-struct RolodexItem {     
-std::string value_;     
-RolodexItem* next_;     
-RolodexItem* prev_; 
+struct RolodexItem { 
+    
+	std::string value_;     
+	RolodexItem* next_;     
+	RolodexItem* prev_; 
+
 }; 
 
 You will also need some way of knowing when you have reached the beginning or end of the Rolodex. One strategy is to use a circular list with a sentinel value that marks both the beginning and the end. This approach will considerably simplify the management of the links when items are inserted or removed. 
@@ -22,7 +24,11 @@ Level 4: ReportModify  the  program  so  that  if  it  is  run  with  the  comma
 
 9 0 0 5 8
 
-The report indicates that there were 9 words inserted, 0 duplicate words omitted, 0 words deleted, and that a total of 5 forward rotations and 8 backward rotations of the Rolodex were performed. However, if the -d option is in effect for the same input, the output should instead read 8 1 0 5 8In this case, the report indicates that there were 8 words inserted, 1 duplicate word omitted (the second occurrence of the), 0 words deleted, 5 forward rotations, and 8 backward rotations.
+The report indicates that there were 9 words inserted, 0 duplicate words omitted, 0 words deleted, and that a total of 5 forward rotations and 8 backward rotations of the Rolodex were performed. However, if the -d option is in effect for the same input, the output should instead read 
+
+8 1 0 5 8
+
+In this case, the report indicates that there were 8 words inserted, 1 duplicate word omitted (the second occurrence of the), 0 words deleted, 5 forward rotations, and 8 backward rotations.
 
 
 
