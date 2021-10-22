@@ -13,22 +13,23 @@ using namespace std;
 
     struct RolodexStats{
         int insertions;
+        int duplication;
         int deletions;
         int forward_rotations;
         int backward_rotations;
     };
 
 
-auto verbose      = true; // Log Rolodex actions
+auto verbose      = false; // Log Rolodex actions
 auto printCurrent = false; // Output only the current Rolodex card
 auto duplicates = false;	//allows duplicates
-auto report = false;	//report mode
+auto report = true;	//report mode
 
 void rolodex()
 {
     string word;
     Rolodex rolodex;
-    RolodexStats statistics = {0, 0, 0, 0};
+    RolodexStats statistics = {0, 0, 0, 0, 0};
     while (cin >> word) {
 
 
@@ -56,6 +57,7 @@ void rolodex()
             if (delete_check) {
                 if (!rolodex.isAfterLast() && rolodex.currentValue() == word) {
                     rolodex.delete_current();
+                    statistics.duplication++;
                     statistics.deletions++;
                     if (verbose)
                         cerr << "delete (forward)\n";
@@ -77,6 +79,7 @@ void rolodex()
             if (delete_check) {
                 if (!rolodex.isBeforeFirst() && rolodex.currentValue() == word) {
                     rolodex.delete_current();
+                    statistics.duplication++;
                     statistics.deletions++;
                     if (verbose)
                         cerr << "delete (backward)\n";
@@ -96,7 +99,8 @@ void rolodex()
 
     else if (report)
     {
-        cout << statistics.insertions << " "
+        cout << statistics.insertions<<" "
+             << statistics.duplication << " "
              << statistics.deletions << " "
              << statistics.forward_rotations << " "
              << statistics.backward_rotations << endl;
