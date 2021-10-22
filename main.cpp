@@ -41,6 +41,8 @@ void rolodex()
                 break;
         }
 
+         if (word.length() == 0)
+            continue; // ignore empty words
 
 
         if (rolodex.isBeforeFirst() || rolodex.currentValue() <= word) {
