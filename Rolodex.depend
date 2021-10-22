@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1634873757 source:e:\codeblocks\codes\rolodex\main.cpp
+	<iostream>
+	<string>
+	<unistd.h>
+	"Rolodex.h"
+
+1634873018 e:\codeblocks\codes\rolodex\rolodex.h
+	<string>
+
+1634873998 source:e:\codeblocks\codes\rolodex\src\rolodex.cpp
+	"Rolodex.h"
+
+1634876773 e:\codeblocks\codes\rolodex\include\rolodex.h
+	<string>
+
