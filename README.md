@@ -22,7 +22,7 @@ Level 4: ReportModify  the  program  so  that  if  it  is  run  with  the  comma
 
 9 0 0 5 8
 
-The report indicates that there were 9 words inserted, 0 duplicate words omitted, 0 words deleted, and that a total of 5 forward rotations and 8 backward rotations of the Rolodex were performed. However, if the -d option is in effect for the same input, the output should instead read 8 1 0 5 8In this case, the report indicates that there were 8 words inserted, 1 duplicate word omitted (the second occurrence of the), 0 words deleted, 5 forward rotations, and 8 backward rotations.Flinders University / College of Science and Engineering3
+The report indicates that there were 9 words inserted, 0 duplicate words omitted, 0 words deleted, and that a total of 5 forward rotations and 8 backward rotations of the Rolodex were performed. However, if the -d option is in effect for the same input, the output should instead read 8 1 0 5 8In this case, the report indicates that there were 8 words inserted, 1 duplicate word omitted (the second occurrence of the), 0 words deleted, 5 forward rotations, and 8 backward rotations.
 
 
 
