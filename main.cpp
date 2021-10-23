@@ -24,7 +24,7 @@ using namespace std;
 auto verbose      = false; // Log Rolodex actions
 auto printCurrent = false; // Output only the current Rolodex card
 auto duplicates = false;	//allows duplicates
-auto report = true;	//report mode
+auto report = false;	//report mode
 
 void rolodex(std::string input)
 {
@@ -35,20 +35,20 @@ void rolodex(std::string input)
     std::string word;
 
     while (ss >> word) {
-
-
-        auto delete_check = false; //delete words
-
-        switch (word.at(0)) {
-            case '-':
-                delete_check = true;
-                word.erase(0, 1);
-                break;
-        }
+         auto delete_check = false; //delete words
 
          if (word.length() == 0)
             continue; // ignore empty words
 
+         if (word.at(0) == '-')
+         {
+            delete_check = true;
+            word.erase(0, 1);
+         }
+         else
+         {
+            statistics.insertions++;
+         }
 
          if (rolodex.isBeforeFirst() || rolodex.currentValue() <= word) {
             while (!rolodex.isAfterLast() && rolodex.currentValue() < word) {
@@ -61,14 +61,18 @@ void rolodex(std::string input)
             if (delete_check) {
                 if (!rolodex.isAfterLast() && rolodex.currentValue() == word) {
                     rolodex.delete_current();
-                    statistics.duplication++;
                     statistics.deletions++;
+                    statistics.insertions--;
                     if (verbose)
                         cerr << "delete (forward)\n";
                 }
-            } else if (duplicates || rolodex.isAfterLast() || rolodex.currentValue() != word) {
+            } else if (duplicates && rolodex.currentValue() == word) {
+                statistics.duplication++;
+                statistics.insertions--;
+                if (verbose)
+                    cerr << "wordOmitted\n";
+            } else if (rolodex.isAfterLast() || rolodex.currentValue() != word) {
                 rolodex.insertBeforeCurrent(word);
-                statistics.insertions++;
                 if (verbose)
                     cerr << "insertBeforeCurrent\n";
             }
@@ -83,22 +87,28 @@ void rolodex(std::string input)
             if (delete_check) {
                 if (!rolodex.isBeforeFirst() && rolodex.currentValue() == word) {
                     rolodex.delete_current();
-                    statistics.duplication++;
                     statistics.deletions++;
+                    statistics.insertions--;
                     if (verbose)
                         cerr << "delete (backward)\n";
                 }
-            } else if (duplicates || rolodex.isBeforeFirst() || rolodex.currentValue() != word) {
+            } else if (duplicates && rolodex.currentValue() == word) {
+                statistics.duplication++;
+                statistics.insertions--;
+                if (verbose)
+                    cerr << "wordOmitted\n";
+            } else if (rolodex.isBeforeFirst() || rolodex.currentValue() != word) {
                 rolodex.insertAfterCurrent(word);
-                statistics.insertions++;
                 if (verbose)
                     cerr << "insertAfterCurrent\n";
             }
+        } else {
+            cerr << "Unknown case scenario" << endl;
         }
     }
 
     if (printCurrent) {
-        cout << rolodex.currentValue() << '\n';
+        cout << "Current value: " << rolodex.currentValue() << '\n';
     }
 
     else if (report)
@@ -133,7 +143,7 @@ int main(int argc, char** argv)
         else if (strcmp(argv[i], "-c") == 0)
             printCurrent = true;
         else if (strcmp(argv[i],"-d") == 0)
-            duplicates = false;
+            duplicates = true;
         else if (strcmp(argv[i], "-r") == 0)
             report = true;
     }

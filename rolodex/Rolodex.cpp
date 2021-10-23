@@ -55,13 +55,7 @@ void Rolodex::rotateBackward()
  */
 const std::string& Rolodex::currentValue() const
 {
-    // Temporary hack to keep the compiler happy
-    // Replace both lines with real code
-//    static std::string dummy;
-//    return dummy;
-
 	return current->value_;
-
 }
 
 /**
@@ -81,7 +75,6 @@ void Rolodex::insertAfterCurrent(const std::string& value)
     current->next_->prev_ = coming;
     current->next_ = coming;
     current = coming;
-
 }
 
 /**
@@ -95,22 +88,21 @@ void Rolodex::insertBeforeCurrent(const std::string& value)
     // Add code here
     RodolexItem* going = new RodolexItem;
 
-        going -> value_ = value;
-        going -> next_ = current;
-        going -> prev_ = current-> prev_;
-        current-> prev_ -> next_ = going;
-        current-> prev_ = going;
+    going -> value_ = value;
+    going -> next_ = current;
+    going -> prev_ = current-> prev_;
+    current-> prev_ -> next_ = going;
+    current-> prev_ = going;
 
-        current=going;
-
+    current = going;
 }
 
  void Rolodex::delete_current()
  {
      //Add code here
-        current-> prev_ -> next_ = current-> next_;
-        current-> next_ -> prev_ = current-> prev_;
-        RodolexItem* deleter = current;
-        current = current-> next_;
-        delete deleter;
-    }
+     current-> prev_ -> next_ = current-> next_;
+     current-> next_ -> prev_ = current-> prev_;
+     RodolexItem* deleter = current;
+     current = current-> next_;
+     delete deleter;
+ }
