@@ -36,7 +36,14 @@ The report indicates that there were 9 words inserted, 0 duplicate words omitted
 
 In this case, the report indicates that there were 8 words inserted, 1 duplicate word omitted (the second occurrence of the), 0 words deleted, 5 forward rotations, and 8 backward rotations.
 
+To run the project, use command:
 
+```
+$./rolodexproject <string> [options: -d, -v, -c, -r]
+```
 
+Example:
 
- 
+```
+$./rolodexproject "the quick black fox jumps -black brown over the lazy dog" -v -r -d
+```
