@@ -4,8 +4,9 @@
 //
 
 #include <iostream>
-#include <string>
+#include <sstream>
 #include <unistd.h>
+#include <string.h>
 
 #include "Rolodex.h"
 
@@ -25,12 +26,15 @@ auto printCurrent = false; // Output only the current Rolodex card
 auto duplicates = false;	//allows duplicates
 auto report = true;	//report mode
 
-void rolodex()
+void rolodex(std::string input)
 {
-    string word;
     Rolodex rolodex;
     RolodexStats statistics = {0, 0, 0, 0, 0};
-    while (cin >> word) {
+
+    std::stringstream ss(input);
+    std::string word;
+
+    while (ss >> word) {
 
 
         auto delete_check = false; //delete words
@@ -122,26 +126,18 @@ void rolodex()
 
 int main(int argc, char** argv)
 {
-    int c;
-    while ((c = getopt(argc, argv, "dvc")) != EOF) {
-        switch (c) {
-        case 'v':
+    for (int i = 2; i < argc; i++)
+    {
+        if (strcmp(argv[i], "-v") == 0)
             verbose = true;
-            break;
-        case 'c':
+        else if (strcmp(argv[i], "-c") == 0)
             printCurrent = true;
-            break;
-        case 'd':
-        	duplicates = false;
-        	break;
-        case 'r':
-        	report = true;
-        	break;
-    	}
-	}
+        else if (strcmp(argv[i],"-d") == 0)
+            duplicates = false;
+        else if (strcmp(argv[i], "-r") == 0)
+            report = true;
+    }
 
-    argc -= optind;
-    argv += optind;
-    rolodex();
+    rolodex(argv[1]);
     return 0;
 }
